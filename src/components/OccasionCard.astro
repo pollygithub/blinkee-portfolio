@@ -1,0 +1,42 @@
+---
+import { Image } from "astro:assets";
+import type { Occasion } from "../data/occasions";
+
+interface Props {
+  occasion: Occasion;
+  loading?: "lazy" | "eager";
+}
+
+const { occasion, loading = "lazy" } = Astro.props;
+---
+
+<a
+  href={occasion.href}
+  class="group relative flex aspect-[4/5] items-end overflow-hidden rounded-[var(--radius-blob)] focus-visible:outline-offset-4"
+>
+  <Image
+    src={occasion.image}
+    alt={occasion.alt}
+    loading={loading}
+    decoding="async"
+    width={480}
+    height={600}
+    class="absolute inset-0 h-full w-full object-cover transition-transform duration-300 group-hover:scale-110"
+  />
+  <div
+    class="absolute inset-0 bg-gradient-to-t from-[color:var(--color-ink)] via-[color:var(--color-ink)]/10 to-transparent opacity-90"
+    aria-hidden="true"
+  ></div>
+  <div class="relative p-5">
+    <h3 class="font-[family-name:var(--font-display)] text-xl font-semibold text-white">
+      {occasion.name}
+    </h3>
+    <p class="mt-1 text-sm text-[color:var(--color-text-ondark-muted)]">{occasion.tagline}</p>
+    <span class="mt-3 inline-flex items-center gap-1 text-sm font-semibold text-[color:var(--color-lime)]">
+      Shop now
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true" class="transition-transform group-hover:translate-x-1">
+        <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+      </svg>
+    </span>
+  </div>
+</a>

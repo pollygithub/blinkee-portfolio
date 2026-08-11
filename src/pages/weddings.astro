@@ -1,0 +1,158 @@
+---
+import { Image } from "astro:assets";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Breadcrumb from "../components/Breadcrumb.astro";
+import ProductCard from "../components/ProductCard.astro";
+import { getProductsByOccasion } from "../data/products";
+import weddingsHero from "../assets/images/hero/weddings-hero-v2.jpg";
+
+const weddingProducts = getProductsByOccasion("weddings");
+const categories = Array.from(new Set(weddingProducts.map((p) => p.category)));
+---
+
+<BaseLayout
+  title="Light Up Wedding Favors & Glow Party Supplies"
+  description="Shop light up wedding favors, LED send-off wands, mood ring favors, and custom wedding blinkees. Glow party supplies guests actually keep, with fast US shipping."
+>
+  <Breadcrumb items={[{ name: "Home", href: "/" }, { name: "Weddings" }]} />
+
+  <!-- Hero -->
+  <section class="relative mt-5 overflow-hidden bg-[color:var(--color-ink)]">
+    <Image
+      src={weddingsHero}
+      alt="A couple dancing at their nighttime wedding reception as guests wave glowing LED send-off wands"
+      loading="eager"
+      fetchpriority="high"
+      decoding="async"
+      width={2048}
+      height={1152}
+      class="absolute inset-0 h-full w-full object-cover opacity-70"
+    />
+    <div
+      class="absolute inset-0 bg-gradient-to-r from-[color:var(--color-ink)] via-[color:var(--color-ink)]/85 to-[color:var(--color-ink)]/40"
+      aria-hidden="true"
+    ></div>
+
+    <div class="container-blinkee relative py-16 sm:py-24">
+      <div class="max-w-xl">
+        <p class="eyebrow text-[color:var(--color-lime)]">Shop by Occasion · Weddings</p>
+        <h1 class="mt-4 font-[family-name:var(--font-display)] text-4xl font-semibold text-white sm:text-5xl">
+          Light Up Wedding Favors Guests Actually Keep
+        </h1>
+        <p class="mt-5 text-lg text-[color:var(--color-text-ondark-muted)]">
+          From LED send-off wands to glowing mood ring favors, shop glow party supplies made for
+          receptions, send-offs, and every toast in between.
+        </p>
+        <div class="mt-8">
+          <a href="#product-grid" class="btn btn-lime">Shop Wedding Favors</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Product grid -->
+  <section class="container-blinkee py-14 sm:py-16" aria-labelledby="grid-heading">
+    <div class="flex flex-wrap items-end justify-between gap-4">
+      <div>
+        <h2 id="grid-heading" class="font-[family-name:var(--font-display)] text-2xl font-semibold sm:text-3xl">
+          Wedding Favors &amp; Décor
+        </h2>
+        <p id="result-count" class="mt-1 text-sm text-[color:var(--color-text-onlight-muted)]" role="status" aria-live="polite">
+          {weddingProducts.length} products
+        </p>
+      </div>
+
+      <div class="flex flex-wrap gap-3">
+        <div>
+          <label for="filter-category" class="sr-only">Filter by category</label>
+          <select
+            id="filter-category"
+            class="rounded-full border-2 border-[color:var(--color-paper-line)] bg-white px-4 py-2 text-sm font-medium text-[color:var(--color-text-onlight)] focus-visible:border-[color:var(--color-violet-deep)]"
+          >
+            <option value="all">All Categories</option>
+            {categories.map((c) => <option value={c}>{c}</option>)}
+          </select>
+        </div>
+        <div>
+          <label for="sort-by" class="sr-only">Sort by</label>
+          <select
+            id="sort-by"
+            class="rounded-full border-2 border-[color:var(--color-paper-line)] bg-white px-4 py-2 text-sm font-medium text-[color:var(--color-text-onlight)] focus-visible:border-[color:var(--color-violet-deep)]"
+          >
+            <option value="featured">Sort: Featured</option>
+            <option value="price-asc">Price: Low to High</option>
+            <option value="price-desc">Price: High to Low</option>
+            <option value="name-asc">Name: A to Z</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div
+      id="product-grid"
+      class="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4"
+    >
+      {weddingProducts.map((product, i) => (
+        <div
+          data-product-item
+          data-category={product.category}
+          data-price={product.price}
+          data-name={product.name}
+          data-order={i}
+        >
+          <ProductCard product={product} loading={i < 4 ? "eager" : "lazy"} />
+        </div>
+      ))}
+    </div>
+
+    <p id="no-results" class="hidden mt-10 text-center text-[color:var(--color-text-onlight-muted)]">
+      No products match that filter yet — try "All Categories".
+    </p>
+  </section>
+</BaseLayout>
+
+<script>
+  const grid = document.getElementById("product-grid");
+  const categorySelect = document.getElementById("filter-category");
+  const sortSelect = document.getElementById("sort-by");
+  const resultCount = document.getElementById("result-count");
+  const noResults = document.getElementById("no-results");
+
+  function applyFilterAndSort() {
+    if (!grid || !(categorySelect instanceof HTMLSelectElement) || !(sortSelect instanceof HTMLSelectElement)) return;
+
+    const items = Array.from(grid.querySelectorAll("[data-product-item]"));
+    const category = categorySelect.value;
+    const sort = sortSelect.value;
+
+    let visibleCount = 0;
+    items.forEach((item) => {
+      const matches = category === "all" || item.getAttribute("data-category") === category;
+      item.classList.toggle("hidden", !matches);
+      if (matches) visibleCount += 1;
+    });
+
+    const sorted = items.slice().sort((a, b) => {
+      if (sort === "price-asc") {
+        return parseFloat(a.getAttribute("data-price") || "0") - parseFloat(b.getAttribute("data-price") || "0");
+      }
+      if (sort === "price-desc") {
+        return parseFloat(b.getAttribute("data-price") || "0") - parseFloat(a.getAttribute("data-price") || "0");
+      }
+      if (sort === "name-asc") {
+        return (a.getAttribute("data-name") || "").localeCompare(b.getAttribute("data-name") || "");
+      }
+      return parseInt(a.getAttribute("data-order") || "0", 10) - parseInt(b.getAttribute("data-order") || "0", 10);
+    });
+
+    sorted.forEach((item) => grid.appendChild(item));
+
+    if (resultCount) {
+      resultCount.textContent = `${visibleCount} product${visibleCount === 1 ? "" : "s"}`;
+    }
+    noResults?.classList.toggle("hidden", visibleCount !== 0);
+  }
+
+  categorySelect?.addEventListener("change", applyFilterAndSort);
+  sortSelect?.addEventListener("change", applyFilterAndSort);
+</script>

@@ -1,0 +1,116 @@
+---
+import { Image } from "astro:assets";
+import type { ImageMetadata } from "astro";
+
+interface Props {
+  eyebrow: string;
+  title: string;
+  description: string;
+  image: ImageMetadata;
+  imageAlt: string;
+  accent: "pink" | "cyan" | "violet";
+  previewTags: string[];
+}
+
+const { eyebrow, title, description, image, imageAlt, accent, previewTags } = Astro.props;
+
+const accentVar = `var(--color-${accent})`;
+const formId = `notify-form-${accent}`;
+---
+
+<section class="bg-[color:var(--color-ink)] text-[color:var(--color-text-ondark)]">
+  <div class="container-blinkee grid items-center gap-10 py-16 lg:grid-cols-2 lg:py-24">
+    <div>
+      <p class="eyebrow" style={`color: ${accentVar};`}>{eyebrow}</p>
+      <h1 class="mt-3 font-[family-name:var(--font-display)] text-4xl font-semibold text-white sm:text-5xl">
+        {title}
+      </h1>
+      <p class="mt-4 max-w-md text-lg text-[color:var(--color-text-ondark-muted)]">
+        {description}
+      </p>
+
+      <ul class="mt-5 flex flex-wrap gap-2" aria-label="Coming to this category">
+        {
+          previewTags.map((tag) => (
+            <li
+              class="rounded-full border px-3 py-1 text-xs font-semibold"
+              style={`border-color: ${accentVar}; color: ${accentVar};`}
+            >
+              {tag}
+            </li>
+          ))
+        }
+      </ul>
+
+      <form id={formId} class="mt-8 max-w-sm" novalidate>
+        <label for={`${formId}-email`} class="text-sm font-semibold text-white">
+          Be first to know when it drops
+        </label>
+        <div class="mt-2 flex gap-2">
+          <div class="flex-1">
+            <label for={`${formId}-email`} class="sr-only">Email address</label>
+            <input
+              id={`${formId}-email`}
+              name="email"
+              type="email"
+              required
+              placeholder="you@example.com"
+              class="w-full rounded-full border border-white/20 px-4 py-2.5 text-sm text-[color:var(--color-text-onlight)] outline-none focus:border-white"
+            />
+          </div>
+          <button
+            type="submit"
+            class="btn shrink-0 !py-2.5 !px-5 text-sm text-[color:var(--color-ink)]"
+            style={`background-color: ${accentVar};`}
+          >
+            Notify Me
+          </button>
+        </div>
+        <p class="mt-2 text-sm" style={`color: ${accentVar};`} role="status" aria-live="polite" id={`${formId}-message`}></p>
+      </form>
+
+      <a
+        href="/"
+        class="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-[color:var(--color-text-ondark-muted)] hover:text-white transition-colors"
+      >
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M19 12H5M11 6l-6 6 6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+        Back to Home
+      </a>
+    </div>
+
+    <div class="relative">
+      <div
+        class="absolute -inset-6 rounded-[2.5rem] opacity-40 blur-2xl"
+        style={`background: ${accentVar};`}
+        aria-hidden="true"
+      ></div>
+      <Image
+        src={image}
+        alt={imageAlt}
+        loading="eager"
+        decoding="async"
+        width={640}
+        height={640}
+        class="relative w-full rounded-[var(--radius-blob)] object-cover aspect-square"
+      />
+    </div>
+  </div>
+</section>
+
+<script define:vars={{ formId }}>
+  const form = document.getElementById(formId);
+  const message = document.getElementById(`${formId}-message`);
+  form?.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const input = form.querySelector(`#${formId}-email`);
+    if (!input || !input.checkValidity()) {
+      if (message) message.textContent = "Please enter a valid email address.";
+      input?.focus();
+      return;
+    }
+    if (message) message.textContent = "You're on the list — we'll email you the second it's live.";
+    form.reset();
+  });
+</script>

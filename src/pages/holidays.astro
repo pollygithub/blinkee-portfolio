@@ -1,0 +1,25 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Breadcrumb from "../components/Breadcrumb.astro";
+import ComingSoon from "../components/ComingSoon.astro";
+import comingSoonHolidays from "../assets/images/hero/coming-soon-holidays-ballroom-purple.jpg";
+---
+
+<BaseLayout
+  title="Holiday Party Supplies — Coming Soon"
+  description="Light-up holiday party supplies for Halloween, Christmas, Mardi Gras, 4th of July, and New Year's Eve are on their way. Get notified when the Holidays shop goes live."
+>
+  <Breadcrumb items={[{ name: "Home", href: "/" }, { name: "Holidays" }]} />
+
+  <div class="mt-5">
+    <ComingSoon
+      eyebrow="Coming Soon"
+      title="Something Bright Is Coming"
+      description="We're loading up a full shop of light-up holiday party supplies — Halloween, Christmas, Mardi Gras, 4th of July, and NYE, all in one glowing place."
+      image={comingSoonHolidays}
+      imageAlt="Couples dancing in an elegant chandelier-lit ballroom bathed in purple ambiance, women wearing glowing LED ballgowns lit up in violet"
+      accent="pink"
+      previewTags={["Halloween", "Christmas", "Mardi Gras", "4th of July", "New Year's Eve"]}
+    />
+  </div>
+</BaseLayout>

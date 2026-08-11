@@ -1,0 +1,305 @@
+---
+import { Image } from "astro:assets";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Breadcrumb from "../components/Breadcrumb.astro";
+import bulkHero from "../assets/images/hero/bulk-hero-v2.jpg";
+
+const pricingTiers = [
+  { qty: "100–249 units", price: "$1.99", note: "Great for a single team or department" },
+  { qty: "250–499 units", price: "$1.59", note: "Most popular for school-wide events" },
+  { qty: "500–999 units", price: "$1.29", note: "Best for districts & multi-team leagues" },
+  { qty: "1,000+ units", price: "$0.99", note: "Volume pricing — ask about custom quotes" },
+];
+
+const steps = [
+  {
+    title: "Send us your logo",
+    detail: "Upload artwork in the quote form below, or email it once we're in touch. Vector files (AI, EPS, SVG) print cleanest, but we can work with what you've got.",
+  },
+  {
+    title: "We proof a mockup",
+    detail: "Your dedicated rep sends a full-color digital proof within 2 business days — free revisions until it's right.",
+  },
+  {
+    title: "Production & shipping",
+    detail: "Approved orders go into production and ship in 2–3 weeks. Rush turnaround available for time-sensitive events.",
+  },
+];
+
+const trustSignals = [
+  { title: "2–3 week turnaround", detail: "On standard custom production runs" },
+  { title: "100-unit minimum", detail: "On custom logo branding orders" },
+  { title: "Dedicated account rep", detail: "Included free on orders of 500+ units" },
+  { title: "Net-30 terms available", detail: "For approved schools, districts & municipalities" },
+];
+---
+
+<BaseLayout
+  title="Custom & Bulk Orders — Quantity Pricing & Logo Branding"
+  description="Bulk pricing and custom logo branding on LED jewelry, glow sticks, and blinkee pins for schools, sports teams, corporate events, and retailers. Request a free quote."
+>
+  <Breadcrumb items={[{ name: "Home", href: "/" }, { name: "Custom & Bulk Orders" }]} />
+
+  <!-- Hero -->
+  <section class="relative mt-5 overflow-hidden bg-[color:var(--color-ink)]">
+    <div class="container-blinkee grid items-center gap-10 py-16 sm:py-20 lg:grid-cols-2">
+      <div>
+        <p class="eyebrow text-[color:var(--color-cyan)]">For Schools, Teams, Retailers &amp; Event Pros</p>
+        <h1 class="mt-3 font-[family-name:var(--font-display)] text-4xl font-semibold text-white sm:text-5xl">
+          Custom &amp; Bulk Orders, Made Easy
+        </h1>
+        <p class="mt-5 max-w-lg text-lg text-[color:var(--color-text-ondark-muted)]">
+          Quantity-break pricing and full-color logo branding on LED jewelry, glow sticks, and
+          blinkee pins. Get a quote in one form — no account, no digging through the consumer catalog.
+        </p>
+        <div class="mt-8 flex flex-wrap gap-3">
+          <a href="#quote-form" class="btn btn-lime">Request a Quote</a>
+          <a href="#pricing" class="btn btn-outline-ondark">See Pricing</a>
+        </div>
+      </div>
+      <div class="relative">
+        <div class="absolute -inset-6 rounded-[2.5rem] bg-[color:var(--color-violet)] opacity-20 blur-2xl" aria-hidden="true"></div>
+        <Image
+          src={bulkHero}
+          alt="A group of sports team members and event staff wearing glowing custom LED wristbands and light-up pins at a nighttime event"
+          loading="eager"
+          fetchpriority="high"
+          decoding="async"
+          width={1200}
+          height={675}
+          class="relative w-full rounded-[var(--radius-blob)] object-cover aspect-[4/3]"
+        />
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing table -->
+  <section id="pricing" class="container-blinkee py-16 sm:py-20 scroll-mt-20" aria-labelledby="pricing-heading">
+    <div class="max-w-2xl">
+      <p class="eyebrow text-[color:var(--color-violet-deep)]">Quantity-Break Pricing</p>
+      <h2 id="pricing-heading" class="mt-2 font-[family-name:var(--font-display)] text-3xl font-semibold sm:text-4xl">
+        The More You Order, The Brighter The Discount
+      </h2>
+      <p class="mt-3 text-[color:var(--color-text-onlight-muted)]">
+        Pricing shown for our Custom Logo Blinkee Pin — our most popular bulk item. Every product
+        in the catalog has its own quantity-break pricing; ask your rep for a full sheet.
+      </p>
+    </div>
+
+    <div class="mt-8 overflow-x-auto">
+      <table class="w-full min-w-[560px] border-collapse overflow-hidden rounded-[var(--radius-blob)] card-surface">
+        <caption class="sr-only">Quantity-break pricing for the Custom Logo Blinkee Pin</caption>
+        <thead>
+          <tr class="bg-[color:var(--color-paper-dim)] text-left">
+            <th scope="col" class="p-4 font-[family-name:var(--font-display)] text-sm font-semibold">Quantity</th>
+            <th scope="col" class="p-4 font-[family-name:var(--font-display)] text-sm font-semibold">Price Per Unit</th>
+            <th scope="col" class="p-4 font-[family-name:var(--font-display)] text-sm font-semibold">Best For</th>
+          </tr>
+        </thead>
+        <tbody>
+          {pricingTiers.map((tier, i) => (
+            <tr class={i < pricingTiers.length - 1 ? "border-b border-[color:var(--color-paper-line)]" : ""}>
+              <td class="p-4 font-medium">{tier.qty}</td>
+              <td class="p-4">
+                <span class="font-[family-name:var(--font-display)] font-semibold text-[color:var(--color-pink-deep)]">
+                  {tier.price}
+                </span>
+                <span class="text-[color:var(--color-text-onlight-muted)]"> /unit</span>
+              </td>
+              <td class="p-4 text-[color:var(--color-text-onlight-muted)]">{tier.note}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- Custom branding explainer -->
+  <section class="bg-[color:var(--color-paper-dim)] border-y border-[color:var(--color-paper-line)]" aria-labelledby="branding-heading">
+    <div class="container-blinkee py-16 sm:py-20">
+      <div class="max-w-2xl">
+        <p class="eyebrow text-[color:var(--color-pink-deep)]">Custom Branding</p>
+        <h2 id="branding-heading" class="mt-2 font-[family-name:var(--font-display)] text-3xl font-semibold sm:text-4xl">
+          Your Logo, Lit Up — LogoBlinkee Style
+        </h2>
+        <p class="mt-3 text-[color:var(--color-text-onlight-muted)]">
+          Full-color imprinting on light-up pins, LED wristbands, and glow accessories. Here's how
+          a custom run comes together, start to finish.
+        </p>
+      </div>
+
+      <ol class="mt-10 grid gap-6 sm:grid-cols-3">
+        {steps.map((step, i) => (
+          <li class="card-surface p-6">
+            <span
+              class="flex h-9 w-9 items-center justify-center rounded-full bg-[color:var(--color-violet)] font-[family-name:var(--font-display)] font-semibold text-[color:var(--color-ink)]"
+              aria-hidden="true"
+            >
+              {i + 1}
+            </span>
+            <h3 class="mt-4 font-[family-name:var(--font-display)] font-semibold">{step.title}</h3>
+            <p class="mt-2 text-sm text-[color:var(--color-text-onlight-muted)]">{step.detail}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <!-- Trust signals -->
+  <section class="container-blinkee py-16 sm:py-20" aria-labelledby="trust-heading">
+    <h2 id="trust-heading" class="sr-only">Why order bulk from Blinkee.com</h2>
+    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+      {trustSignals.map((t) => (
+        <div class="rounded-[var(--radius-blob)] border border-[color:var(--color-paper-line)] p-5">
+          <p class="font-[family-name:var(--font-display)] font-semibold text-lg">{t.title}</p>
+          <p class="mt-1 text-sm text-[color:var(--color-text-onlight-muted)]">{t.detail}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- Quote request form -->
+  <section id="quote-form" class="bg-[color:var(--color-ink)] scroll-mt-20" aria-labelledby="quote-heading">
+    <div class="container-blinkee grid gap-10 py-16 sm:py-20 lg:grid-cols-2">
+      <div>
+        <p class="eyebrow text-[color:var(--color-lime)]">Request a Quote</p>
+        <h2 id="quote-heading" class="mt-2 font-[family-name:var(--font-display)] text-3xl font-semibold text-white sm:text-4xl">
+          Tell Us What You're Planning
+        </h2>
+        <p class="mt-4 max-w-md text-[color:var(--color-text-ondark-muted)]">
+          Share a few details and a bulk-orders rep will follow up with pricing and proof timelines —
+          usually within one business day.
+        </p>
+        <p class="mt-4 max-w-md text-sm text-[color:var(--color-text-ondark-muted)]">
+          This is a portfolio demo: the form validates on the client but doesn't send data anywhere.
+        </p>
+      </div>
+
+      <form id="quote-request-form" novalidate class="card-surface p-6 sm:p-8">
+        <div class="grid gap-5 sm:grid-cols-2">
+          <div>
+            <label for="quote-name" class="text-sm font-semibold text-[color:var(--color-text-onlight)]">
+              Full name <span aria-hidden="true">*</span>
+            </label>
+            <input
+              id="quote-name"
+              name="name"
+              type="text"
+              required
+              autocomplete="name"
+              class="mt-1.5 w-full rounded-xl border-2 border-[color:var(--color-paper-line)] px-3.5 py-2.5 text-sm outline-none focus-visible:border-[color:var(--color-violet-deep)]"
+            />
+            <p class="mt-1 hidden text-xs text-[color:var(--color-pink-deep)]" data-error-for="quote-name">Please enter your name.</p>
+          </div>
+
+          <div>
+            <label for="quote-company" class="text-sm font-semibold text-[color:var(--color-text-onlight)]">
+              Company / organization <span aria-hidden="true">*</span>
+            </label>
+            <input
+              id="quote-company"
+              name="company"
+              type="text"
+              required
+              autocomplete="organization"
+              class="mt-1.5 w-full rounded-xl border-2 border-[color:var(--color-paper-line)] px-3.5 py-2.5 text-sm outline-none focus-visible:border-[color:var(--color-violet-deep)]"
+            />
+            <p class="mt-1 hidden text-xs text-[color:var(--color-pink-deep)]" data-error-for="quote-company">Please enter your company or organization.</p>
+          </div>
+
+          <div>
+            <label for="quote-email" class="text-sm font-semibold text-[color:var(--color-text-onlight)]">
+              Email <span aria-hidden="true">*</span>
+            </label>
+            <input
+              id="quote-email"
+              name="email"
+              type="email"
+              required
+              autocomplete="email"
+              class="mt-1.5 w-full rounded-xl border-2 border-[color:var(--color-paper-line)] px-3.5 py-2.5 text-sm outline-none focus-visible:border-[color:var(--color-violet-deep)]"
+            />
+            <p class="mt-1 hidden text-xs text-[color:var(--color-pink-deep)]" data-error-for="quote-email">Please enter a valid email address.</p>
+          </div>
+
+          <div>
+            <label for="quote-quantity" class="text-sm font-semibold text-[color:var(--color-text-onlight)]">
+              Estimated quantity <span aria-hidden="true">*</span>
+            </label>
+            <input
+              id="quote-quantity"
+              name="quantity"
+              type="number"
+              min="100"
+              step="1"
+              required
+              placeholder="e.g. 250"
+              class="mt-1.5 w-full rounded-xl border-2 border-[color:var(--color-paper-line)] px-3.5 py-2.5 text-sm outline-none focus-visible:border-[color:var(--color-violet-deep)]"
+            />
+            <p class="mt-1 hidden text-xs text-[color:var(--color-pink-deep)]" data-error-for="quote-quantity">Please enter a quantity of at least 100.</p>
+          </div>
+
+          <div class="sm:col-span-2">
+            <label for="quote-message" class="text-sm font-semibold text-[color:var(--color-text-onlight)]">
+              Tell us about your event
+            </label>
+            <textarea
+              id="quote-message"
+              name="message"
+              rows="4"
+              placeholder="Product, timeline, branding ideas — whatever helps us quote it right."
+              class="mt-1.5 w-full rounded-xl border-2 border-[color:var(--color-paper-line)] px-3.5 py-2.5 text-sm outline-none focus-visible:border-[color:var(--color-violet-deep)]"
+            ></textarea>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-violet mt-6 w-full justify-center sm:w-auto">
+          Submit Quote Request
+        </button>
+
+        <p id="quote-form-message" class="mt-4 text-sm font-medium" role="status" aria-live="polite"></p>
+      </form>
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  const form = document.getElementById("quote-request-form");
+  const message = document.getElementById("quote-form-message");
+
+  function setFieldError(field, show) {
+    const errorEl = document.querySelector(`[data-error-for="${field.id}"]`);
+    errorEl?.classList.toggle("hidden", !show);
+    field.classList.toggle("!border-[color:var(--color-pink-deep)]", show);
+  }
+
+  form?.addEventListener("submit", (e) => {
+    e.preventDefault();
+    if (!(form instanceof HTMLFormElement)) return;
+
+    const requiredFields = form.querySelectorAll("[required]");
+    let isValid = true;
+
+    requiredFields.forEach((field) => {
+      const valid = field.checkValidity();
+      setFieldError(field, !valid);
+      if (!valid) isValid = false;
+    });
+
+    if (!isValid) {
+      if (message) {
+        message.textContent = "Please fix the highlighted fields and try again.";
+        message.style.color = "var(--color-pink-deep)";
+      }
+      const firstInvalid = form.querySelector(":invalid");
+      if (firstInvalid instanceof HTMLElement) firstInvalid.focus();
+      return;
+    }
+
+    if (message) {
+      message.textContent = "Thanks! A bulk-orders rep will follow up within one business day.";
+      message.style.color = "var(--color-lime-deep)";
+    }
+    form.reset();
+  });
+</script>

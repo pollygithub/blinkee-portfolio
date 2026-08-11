@@ -1,0 +1,199 @@
+@import "tailwindcss";
+
+/* Self-hosted fonts (avoids third-party request + reduces font-swap layout shift) */
+@import "@fontsource/fredoka/500.css";
+@import "@fontsource/fredoka/600.css";
+@import "@fontsource/fredoka/700.css";
+@import "@fontsource/plus-jakarta-sans/400.css";
+@import "@fontsource/plus-jakarta-sans/500.css";
+@import "@fontsource/plus-jakarta-sans/600.css";
+@import "@fontsource/plus-jakarta-sans/700.css";
+
+/* ---------------------------------------------------------------
+   Blinkee.com design tokens
+   Palette: deep "after-dark" ink surfaces + neon accents, paired
+   with light paper surfaces for product/reading contexts so body
+   copy and prices always sit on high-contrast backgrounds.
+   All accent/text pairings below are chosen to clear WCAG AA.
+----------------------------------------------------------------- */
+@theme {
+  --font-display: "Fredoka", "Segoe UI", sans-serif;
+  --font-body: "Plus Jakarta Sans", "Segoe UI", sans-serif;
+
+  /* Dark "glow" surfaces */
+  --color-ink: #120b29;
+  --color-ink-soft: #1e1440;
+  --color-ink-softer: #2a1c56;
+
+  /* Light "paper" surfaces */
+  --color-paper: #fbf9ff;
+  --color-paper-dim: #f1ecfb;
+  --color-paper-line: #e3daf5;
+
+  /* Text */
+  --color-text-onlight: #1b1333;
+  --color-text-onlight-muted: #5f5680;
+  --color-text-ondark: #f4f1ff;
+  --color-text-ondark-muted: #beb4e6;
+
+  /* Vivid accents — decorative, dark backgrounds, button fills */
+  --color-pink: #ff3ea6;
+  --color-cyan: #33e6f0;
+  --color-lime: #cbff4d;
+  --color-violet: #a56bff;
+  --color-yellow: #ffd23f;
+
+  /* Deep accents — AA-safe as text/links/icons on light backgrounds */
+  --color-pink-deep: #c41e86;
+  --color-cyan-deep: #0b7f96;
+  --color-violet-deep: #6a2fd9;
+  --color-lime-deep: #4a7a00;
+
+  --shadow-glow-pink: 0 0 0 1px rgba(255, 62, 166, 0.4), 0 8px 30px -6px rgba(255, 62, 166, 0.55);
+  --shadow-glow-cyan: 0 0 0 1px rgba(51, 230, 240, 0.4), 0 8px 30px -6px rgba(51, 230, 240, 0.55);
+  --shadow-glow-violet: 0 0 0 1px rgba(165, 107, 255, 0.4), 0 8px 30px -6px rgba(165, 107, 255, 0.55);
+  --shadow-glow-lime: 0 0 0 1px rgba(203, 255, 77, 0.5), 0 8px 30px -6px rgba(203, 255, 77, 0.45);
+
+  --radius-blob: 1.75rem;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    background-color: var(--color-paper);
+    color: var(--color-text-onlight);
+    font-family: var(--font-body);
+  }
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    letter-spacing: -0.01em;
+  }
+  :focus-visible {
+    outline: 3px solid var(--color-violet-deep);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+  ::selection {
+    background-color: var(--color-lime);
+    color: var(--color-ink);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    * {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+@layer components {
+  .container-blinkee {
+    width: 100%;
+    max-width: 84rem;
+    margin-inline: auto;
+    padding-inline: 1.25rem;
+  }
+  @media (min-width: 640px) {
+    .container-blinkee { padding-inline: 2rem; }
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    font-family: var(--font-display);
+    font-weight: 600;
+    border-radius: 999px;
+    padding: 0.85rem 1.75rem;
+    font-size: 1rem;
+    line-height: 1;
+    transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+    white-space: nowrap;
+  }
+  .btn:hover { transform: translateY(-2px); }
+  .btn:active { transform: translateY(0); }
+
+  .btn-lime {
+    background-color: var(--color-lime);
+    color: var(--color-ink);
+    box-shadow: var(--shadow-glow-lime);
+  }
+  .btn-outline-ondark {
+    background-color: transparent;
+    color: var(--color-text-ondark);
+    border: 2px solid var(--color-text-ondark);
+  }
+  .btn-outline-ondark:hover {
+    background-color: var(--color-text-ondark);
+    color: var(--color-ink);
+  }
+  .btn-violet {
+    background-color: var(--color-violet);
+    color: var(--color-ink);
+    box-shadow: var(--shadow-glow-violet);
+  }
+  .btn-ghost-onlight {
+    background-color: var(--color-paper-dim);
+    color: var(--color-text-onlight);
+    border: 2px solid var(--color-paper-line);
+  }
+  .btn-ghost-onlight:hover {
+    border-color: var(--color-violet-deep);
+    color: var(--color-violet-deep);
+  }
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 0.75rem;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    padding: 0.3rem 0.75rem;
+    border-radius: 999px;
+  }
+
+  .card-surface {
+    background-color: white;
+    border: 1px solid var(--color-paper-line);
+    border-radius: var(--radius-blob);
+  }
+
+  .eyebrow {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 0.8rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .skip-link {
+    position: absolute;
+    left: -9999px;
+    top: 0;
+    z-index: 100;
+    background: var(--color-lime);
+    color: var(--color-ink);
+    padding: 0.75rem 1.25rem;
+    border-radius: 0 0 0.75rem 0;
+    font-family: var(--font-display);
+    font-weight: 600;
+  }
+  .skip-link:focus {
+    left: 0;
+  }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}

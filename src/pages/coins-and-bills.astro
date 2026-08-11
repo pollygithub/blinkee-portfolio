@@ -1,0 +1,25 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Breadcrumb from "../components/Breadcrumb.astro";
+import ComingSoon from "../components/ComingSoon.astro";
+import comingSoonCoins from "../assets/images/hero/coming-soon-coins.jpg";
+---
+
+<BaseLayout
+  title="Challenge Coins & Replica Currency — Coming Soon"
+  description="Collectible challenge coins, replica currency, and novelty bill sets are coming to Blinkee.com. Get notified when the Coins & Bills shop goes live."
+>
+  <Breadcrumb items={[{ name: "Home", href: "/" }, { name: "Coins & Bills" }]} />
+
+  <div class="mt-5">
+    <ComingSoon
+      eyebrow="Coming Soon"
+      title="The Vault Is About To Open"
+      description="Challenge coins, replica currency, and collector sets — the niche stuff you came here to find — is on its way to Blinkee.com."
+      image={comingSoonCoins}
+      imageAlt="Illustrated glowing stack of vintage-style challenge coins and a replica bill fanned out"
+      accent="violet"
+      previewTags={["Challenge Coins", "Replica Currency", "Collector Sets"]}
+    />
+  </div>
+</BaseLayout>
