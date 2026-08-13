@@ -21,7 +21,6 @@
   .headline { font-family:'Fredoka',Arial,Helvetica,sans-serif; font-weight:700; }
   .body-copy { font-family:'Plus Jakarta Sans',Arial,Helvetica,sans-serif; }
 
-  .btn-table { display:inline-table; vertical-align:top; }
   .tag-pill { display:inline-block; margin:0 8px 10px 0; }
 
   @media only screen and (max-width:600px) {
@@ -29,8 +28,8 @@
     .fluid-img { width:100% !important; height:auto !important; }
     .mobile-pad { padding-left:24px !important; padding-right:24px !important; }
     .headline { font-size:30px !important; line-height:36px !important; }
-    .btn-table { display:block !important; width:100% !important; margin:0 0 10px 0 !important; }
-    .btn-table a { display:block !important; text-align:center !important; }
+    .btn-cell { display:block !important; width:100% !important; padding:0 0 10px 0 !important; }
+    .btn-cell a { width:100% !important; text-align:center !important; box-sizing:border-box; }
   }
 </style>
 </head>
@@ -82,16 +81,12 @@
           <!-- CTA buttons -->
           <tr>
             <td class="mobile-pad" style="padding:24px 40px 8px 40px;" align="left">
-              <table role="presentation" cellpadding="0" cellspacing="0" class="btn-table" style="margin:0 10px 0 0;">
+              <table role="presentation" cellpadding="0" cellspacing="0">
                 <tr>
-                  <td>
+                  <td class="btn-cell" style="padding-right:10px;">
                     <a href="https://blinkee-portfolio.pages.dev/holidays/" class="body-copy" style="display:inline-block; padding:14px 28px; font-size:15px; font-weight:700; color:#120b29; text-decoration:none; background-color:#cbff4d; border-radius:999px;">Notify Me When It Drops</a>
                   </td>
-                </tr>
-              </table>
-              <table role="presentation" cellpadding="0" cellspacing="0" class="btn-table">
-                <tr>
-                  <td>
+                  <td class="btn-cell">
                     <a href="https://blinkee-portfolio.pages.dev/weddings/" class="body-copy" style="display:inline-block; padding:12px 26px; font-size:15px; font-weight:700; color:#ffffff; text-decoration:none; border:2px solid #ffffff; border-radius:999px;">Shop What's Live Now</a>
                   </td>
                 </tr>
